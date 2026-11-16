@@ -120,7 +120,6 @@ export const ruleSet = {
     { name: "Electrical and renewable", count: "104", share: 36 },
     { name: "Scope and compliance", count: "8", share: 3 },
   ],
-  defects: "3 defects in the published code found and flagged",
 };
 
 export const states = {

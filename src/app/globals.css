@@ -1103,24 +1103,6 @@ a.wordmark:hover img {
   color: var(--ink-2);
 }
 
-.rules-defects {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-top: clamp(20px, 2.6vw, 32px);
-  font-size: 0.9375rem;
-  color: var(--ink-2);
-}
-
-/* A plain pine tick. Not sage: sage is one of the bars, and this is not a key to it. */
-.rules-defects::before {
-  content: "";
-  flex: none;
-  width: 8px;
-  height: 8px;
-  background: var(--pine);
-}
-
 .bars {
   display: grid;
   gap: clamp(12px, 1.4vw, 16px);

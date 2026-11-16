@@ -20,7 +20,6 @@ export function RuleSet() {
               </span>
               <span>{ruleSet.totalLabel}</span>
             </p>
-            <p className="rules-defects">{ruleSet.defects}</p>
           </div>
           <ul className="bars">
             {ruleSet.systems.map((system, i) => (
