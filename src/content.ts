@@ -272,7 +272,6 @@ export const wordmark = { name: "Pramana", suffix: "AI" };
  * the three the page already speaks to, plus everyone else.
  */
 export const registration = {
-  label: "Pre-registration",
   title: "Pre-register with us",
   lead: "Tell us who you are and where you work. We read every entry and write back by email.",
   role: {

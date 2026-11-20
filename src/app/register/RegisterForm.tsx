@@ -33,8 +33,8 @@ export function RegisterForm() {
       <PageHeader back={!sent} />
       <main className="section reg-sheet">
         <div className="graph" aria-hidden="true" />
-        <div className="wrap">
-          {sent ? (
+        {sent ? (
+          <div className="wrap">
             <div className="form-done" ref={result} tabIndex={-1} role="status">
               <h1>{copy.done.title}</h1>
               <p className="lead">{copy.done.body}</p>
@@ -42,17 +42,18 @@ export function RegisterForm() {
                 {nav.back.label}
               </a>
             </div>
-          ) : (
-            <>
-              <div className="head">
-                <p className="label">{copy.label}</p>
-                <h1>{copy.title}</h1>
-                <p className="lead">{copy.lead}</p>
-              </div>
-              <Fields state={state} action={action} pending={pending} result={result} />
-            </>
-          )}
-        </div>
+          </div>
+        ) : (
+          // Two columns that line up with the header: the heading under the logo, the
+          // form's right edge under the header's button.
+          <div className="wrap reg-layout">
+            <div className="reg-intro">
+              <h1>{copy.title}</h1>
+              <p className="lead">{copy.lead}</p>
+            </div>
+            <Fields state={state} action={action} pending={pending} result={result} />
+          </div>
+        )}
       </main>
     </>
   );

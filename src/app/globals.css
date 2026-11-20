@@ -2205,22 +2205,33 @@ a.wordmark:hover img {
   min-height: calc(100svh - var(--header-h));
 }
 
-.head h1 {
-  grid-column: 2;
-  max-width: 21ch;
+/* Two columns that share the header's edges: the heading starts under the logo, and the
+   form ends under the header's button. Both columns open with a hairline at the same height. */
+.reg-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: start;
+  column-gap: clamp(40px, 6vw, 96px);
+}
+
+.reg-intro {
+  /* Stays in view while the longer form scrolls past. */
+  position: sticky;
+  top: calc(var(--header-h) + clamp(24px, 3vw, 40px));
+  display: grid;
+  gap: clamp(16px, 1.8vw, 22px);
+  padding-top: clamp(22px, 2.6vw, 32px);
+  background: linear-gradient(var(--rule), var(--rule)) 0 0 / 100% 1px no-repeat;
 }
 
 /* The page's one heading: the form's title, then "Received." once it is sent. */
-.head h1,
+.reg-intro h1,
 .form-done h1 {
   font-size: clamp(2.125rem, 3.9vw, 3.25rem);
 }
 
-.reg-form,
 .form-done {
-  /* Under the heading, clear of the label's margin column. */
   max-width: 780px;
-  margin-left: calc(200px + clamp(24px, 3.5vw, 48px));
 }
 
 .reg-form {
@@ -2549,9 +2560,14 @@ h2.reg-legend {
 }
 
 @media (max-width: 1023px) {
-  .reg-form,
-  .form-done {
-    margin-left: 0;
+  /* One column: the heading, then the form. */
+  .reg-layout {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(28px, 4vw, 40px);
+  }
+
+  .reg-intro {
+    position: static;
   }
 }
 
