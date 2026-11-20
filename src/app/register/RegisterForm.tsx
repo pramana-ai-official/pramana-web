@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useRef } from "react";
+import { PageHeader } from "@/components/sections/SiteChrome";
 import { Arrow } from "@/components/ui";
 import { nav, registration as copy } from "@/content";
 import { EMPTY, LIMITS, STATES, type Errors, type Field, type RegisterState, type Values } from "@/lib/registration";
@@ -10,10 +11,13 @@ const IDLE: RegisterState = { status: "idle", values: EMPTY, errors: {} };
 const describedBy = (...ids: (string | false | undefined)[]) => ids.filter(Boolean).join(" ") || undefined;
 
 /**
- * The pre-registration form. The server decides what is valid and sends the mail
- * (actions.ts); this draws the answers, the errors it sends back, and the three ways an
- * attempt can end. It works with scripts off too: the browser posts the form and the
- * page comes back with the same result.
+ * The pre-registration page: its header, its heading and the form. The server decides what
+ * is valid and sends the mail (actions.ts); this draws the answers, the errors it sends back, and the
+ * three ways an attempt can end. It works with scripts off too: the browser posts the form
+ * and the page comes back with the same result.
+ *
+ * Once an entry is sent, the page is only the receipt: the form's heading and the header's
+ * back link go, and one "Back to the site" stays under the message.
  */
 export function RegisterForm() {
   const [state, action, pending] = useActionState(register, IDLE);
@@ -23,18 +27,49 @@ export function RegisterForm() {
     if (state.status !== "idle") result.current?.focus();
   }, [state]);
 
-  if (state.status === "sent") {
-    return (
-      <div className="form-done" ref={result} tabIndex={-1} role="status">
-        <h2>{copy.done.title}</h2>
-        <p className="lead">{copy.done.body}</p>
-        <a className="btn btn-line" href={nav.back.href}>
-          {nav.back.label}
-        </a>
-      </div>
-    );
-  }
+  const sent = state.status === "sent";
+  return (
+    <>
+      <PageHeader back={!sent} />
+      <main className="section reg-sheet">
+        <div className="graph" aria-hidden="true" />
+        <div className="wrap">
+          {sent ? (
+            <div className="form-done" ref={result} tabIndex={-1} role="status">
+              <h1>{copy.done.title}</h1>
+              <p className="lead">{copy.done.body}</p>
+              <a className="btn btn-line" href={nav.back.href}>
+                {nav.back.label}
+              </a>
+            </div>
+          ) : (
+            <>
+              <div className="head">
+                <p className="label">{copy.label}</p>
+                <h1>{copy.title}</h1>
+                <p className="lead">{copy.lead}</p>
+              </div>
+              <Fields state={state} action={action} pending={pending} result={result} />
+            </>
+          )}
+        </div>
+      </main>
+    </>
+  );
+}
 
+/** The form itself: every question, the errors, and the send bar. */
+function Fields({
+  state,
+  action,
+  pending,
+  result,
+}: {
+  state: Exclude<RegisterState, { status: "sent" }>;
+  action: (form: FormData) => void;
+  pending: boolean;
+  result: React.RefObject<HTMLDivElement | null>;
+}) {
   const { values, errors } = state;
   return (
     // The server checks every answer, so the browser's own pop-up checks are switched off:

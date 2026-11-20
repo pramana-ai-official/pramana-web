@@ -48,15 +48,20 @@ export function SiteHeader() {
   );
 }
 
-/** The header on a page other than the landing page: the logo leads home, and one link goes back. */
-export function PageHeader() {
+/**
+ * The header on a page other than the landing page: the logo leads home, and one link goes
+ * back. `back` is false when the page already offers that link in its own text.
+ */
+export function PageHeader({ back = true }: { back?: boolean }) {
   return (
     <header className="site-header">
       <nav aria-label="Main" className="wrap site-nav">
         <Wordmark href={nav.back.href} />
-        <a href={nav.back.href} className="btn btn-line btn-small">
-          {nav.back.label}
-        </a>
+        {back && (
+          <a href={nav.back.href} className="btn btn-line btn-small">
+            {nav.back.label}
+          </a>
+        )}
       </nav>
     </header>
   );
