@@ -48,6 +48,20 @@ export function SiteHeader() {
   );
 }
 
+/** The header on a page other than the landing page: the logo leads home, and one link goes back. */
+export function PageHeader() {
+  return (
+    <header className="site-header">
+      <nav aria-label="Main" className="wrap site-nav">
+        <Wordmark href={nav.back.href} />
+        <a href={nav.back.href} className="btn btn-line btn-small">
+          {nav.back.label}
+        </a>
+      </nav>
+    </header>
+  );
+}
+
 export function SiteFooter() {
   const { sources } = footer;
   return (

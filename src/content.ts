@@ -8,7 +8,7 @@
  */
 
 /** Our contact address. It fills the founder's "[CONTACT EMAIL]" placeholder (16 Nov 2026). */
-const EMAIL = "team@pramanaai.in";
+export const EMAIL = "team@pramanaai.in";
 
 export const meta = {
   /** The page's public address. Share previews and search engines read it. */
@@ -26,6 +26,8 @@ export const nav = {
     { href: "#assessors", label: "For assessors" },
   ],
   cta: { href: "#pilot", label: "Start a pilot" },
+  /** On the pre-registration page, where the section links have nothing to point at. */
+  back: { href: "/", label: "Back to the site" },
 };
 
 export const hero = {
@@ -33,13 +35,10 @@ export const hero = {
   title: "Making a building energy code something a state can see.",
   body: "Pramana reads values from the documents a building project already produces, checks each one clause by clause against the state's notified limit, and keeps every result on an append-only record. The empanelled assessor signs. Pramana keeps the evidence.",
   // The hero's main call to action. Not in the founder's page: it was added on
-  // 16 Nov 2026. It opens an email to us, with the subject line filled in. It took the
-  // place of the founder's "Propose a pilot" button, which was removed the same day
-  // (the header's "Start a pilot" and the pilot section still lead there).
-  register: {
-    href: `mailto:${EMAIL}?subject=${encodeURIComponent("Pre-registration: Pramana AI")}`,
-    label: "Pre-register with us",
-  },
+  // 16 Nov 2026 and took the place of her "Propose a pilot" button (the header's
+  // "Start a pilot" and the pilot section still lead there). Since 21 Nov 2026 it opens
+  // the pre-registration form instead of an email.
+  register: { href: "/register", label: "Pre-register with us" },
   secondary: { href: "#how", label: "See how it works" },
   // The founder's page also showed the state dashboard here, under the hero. It was removed
   // on 16 Nov 2026 because the same screen appears in "For states". Its caption was
@@ -266,3 +265,67 @@ export const footer = {
 };
 
 export const wordmark = { name: "Pramana", suffix: "AI" };
+
+/**
+ * The pre-registration form (the page at /register). None of this is the founder's copy:
+ * it was written on 21 Nov 2026 and waits for her sign-off. The four kinds of visitor are
+ * the three the page already speaks to, plus everyone else.
+ */
+export const registration = {
+  label: "Pre-registration",
+  title: "Pre-register with us",
+  lead: "Tell us who you are and where you work. We read every entry and write back by email.",
+  role: {
+    legend: "Who you are",
+    options: [
+      { value: "state", label: "State agency or municipal corporation" },
+      { value: "developer", label: "Developer, architect or MEP consultant" },
+      { value: "assessor", label: "Empanelled assessor or energy auditor" },
+      { value: "other", label: "Someone else" },
+    ],
+  },
+  details: "Your details",
+  contact: "How to reach you",
+  interest: {
+    legend: "What you would like",
+    options: [
+      { value: "pilot", label: "Take part in the first pilot" },
+      { value: "walkthrough", label: "See a walkthrough" },
+      { value: "updates", label: "Stay informed" },
+    ],
+  },
+  fields: {
+    name: { label: "Full name" },
+    organisation: { label: "Organisation", hint: "Department, corporation or firm" },
+    title: { label: "Your role there" },
+    state: { label: "State or union territory", choose: "Choose one", abroad: "Outside India" },
+    email: { label: "Work email" },
+    phone: { label: "Phone" },
+    message: { label: "Anything we should know" },
+  },
+  optional: "optional",
+  submit: "Send pre-registration",
+  sending: "Sending",
+  notice: "We use these details only to write back to you about Pramana AI.",
+  errors: {
+    summary: "Some answers are missing or need a second look.",
+    role: "Choose the one that fits you best.",
+    name: "Enter your name.",
+    organisation: "Enter where you work.",
+    title: "Shorten this a little.",
+    state: "Choose your state or union territory.",
+    email: "Enter an email address we can reply to.",
+    phone: "Enter a phone number, or leave this empty.",
+    interest: "Choose what you would like.",
+    message: "Shorten this to 1,500 characters.",
+  },
+  done: {
+    title: "Received.",
+    body: "Thank you. Your details are with the Pramana team, and we will write back to the address you gave.",
+  },
+  unsent: {
+    title: "This did not send from the page.",
+    body: "Your answers are still below. Send them from your own email instead; they reach the same inbox.",
+    action: "Send by email",
+  },
+};

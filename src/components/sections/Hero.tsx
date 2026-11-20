@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Skyline } from "@/components/Skyline";
 import { Arrow } from "@/components/ui";
 import { hero, how, record } from "@/content";
@@ -18,13 +19,13 @@ export function Hero() {
             {hero.body}
           </p>
           <div className="actions">
-            {/* The main call to action: it opens an email to us. */}
-            <a className="register" href={hero.register.href} data-clear="box">
+            {/* The main call to action: it opens the pre-registration form. */}
+            <Link className="register" href={hero.register.href} data-clear="box">
               <span className="register-label">{hero.register.label}</span>
               <span className="register-go" aria-hidden="true">
                 <Arrow />
               </span>
-            </a>
+            </Link>
             <a className="btn btn-line" href={hero.secondary.href} data-clear="box">
               {hero.secondary.label}
             </a>

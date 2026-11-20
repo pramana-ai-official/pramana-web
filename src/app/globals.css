@@ -511,7 +511,8 @@ a.wordmark:hover img {
   min-height: 60px;
 }
 
-/* The main call to action: it opens an email to us. A pine bar with a red tile to press.
+/* The main call to action: it opens the pre-registration form, and on that page it sends
+   the form. A pine bar with a red tile to press.
    The checker's corner brackets point at it, as they do at every place on the drawing
    where something is read. Pointing at it floods the bar with the tile's red. */
 .register {
@@ -2193,5 +2194,375 @@ a.wordmark:hover img {
 
   .stamp-close {
     margin: 8px 0 12px 8px;
+  }
+}
+
+/* ---------- pre-registration: a form set out like a schedule on a drawing ----------
+   Hairline rows, square boxes to fill, and the red bar to send. Errors are written in
+   pine with a heavier box, never in red: red on this page means a person acts or signs. */
+
+.reg-sheet {
+  min-height: calc(100svh - var(--header-h));
+}
+
+.head h1 {
+  grid-column: 2;
+  max-width: 21ch;
+  font-size: clamp(2.125rem, 3.9vw, 3.25rem);
+}
+
+.reg-form,
+.form-done {
+  /* Under the heading, clear of the label's margin column. */
+  max-width: 780px;
+  margin-left: calc(200px + clamp(24px, 3.5vw, 48px));
+}
+
+.reg-form {
+  display: grid;
+  gap: clamp(26px, 3.2vw, 40px);
+}
+
+.reg-group {
+  display: grid;
+  gap: 18px;
+  padding-top: clamp(18px, 2vw, 24px);
+  background: linear-gradient(var(--rule), var(--rule)) 0 0 / 100% 1px no-repeat;
+}
+
+.reg-legend {
+  margin: 0 0 14px;
+  padding: 0;
+  font-variation-settings: "wdth" 106;
+  font-weight: 700;
+  font-size: 1.1875rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--pine);
+}
+
+h2.reg-legend {
+  margin-bottom: 0;
+}
+
+.reg-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+}
+
+.field {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+}
+
+.field label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.field-optional {
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+
+.field :is(input, select, textarea) {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 14px;
+  border: 1px solid var(--ink-3);
+  border-radius: 0;
+  background-color: var(--cream-light);
+  color: var(--pine);
+  /* 17px: large enough that a phone does not zoom the page when a box is tapped. */
+  font: inherit;
+  line-height: 1.4;
+  caret-color: var(--maroon);
+  appearance: none;
+  transition: border-color 0.2s var(--ease-out);
+}
+
+.field textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+.field select {
+  padding-right: 44px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--pine) 50%), linear-gradient(135deg, var(--pine) 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) 50%,
+    calc(100% - 16px) 50%;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+.field :is(input, select, textarea):is(:hover, :focus-visible) {
+  border-color: var(--pine);
+}
+
+/* A browser's own fill-in keeps the page's paper and ink. */
+.field input:autofill {
+  -webkit-text-fill-color: var(--pine);
+  box-shadow: 0 0 0 100px var(--cream-light) inset;
+}
+
+.field-hint {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+
+.field-error {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* A drawn cross, in the same ink as the text. */
+.field-error::before {
+  content: "";
+  flex: none;
+  width: 10px;
+  height: 10px;
+  background:
+    linear-gradient(
+      45deg,
+      transparent calc(50% - 0.9px),
+      currentColor calc(50% - 0.9px) calc(50% + 0.9px),
+      transparent calc(50% + 0.9px)
+    ),
+    linear-gradient(
+      -45deg,
+      transparent calc(50% - 0.9px),
+      currentColor calc(50% - 0.9px) calc(50% + 0.9px),
+      transparent calc(50% + 0.9px)
+    );
+}
+
+.field[data-invalid] :is(input, select, textarea) {
+  /* One pixel heavier, with the padding taken in so nothing shifts. */
+  padding: 11px 13px;
+  border: 2px solid var(--pine);
+  background-color: var(--cream-deep);
+}
+
+.field[data-invalid] select {
+  padding-right: 43px;
+}
+
+/* The trap for bots: on the page for them, nowhere for people. */
+.field-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.choices {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.choice-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.choice-list[data-count="3"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.choices .field-error {
+  margin-top: 10px;
+}
+
+/* A tile to pick. The whole tile is the radio button; picked, it turns to ink and shows the hatch tick. */
+.choice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 60px;
+  padding: 12px 16px;
+  border: 1px solid var(--ink-3);
+  background: var(--cream-light);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out),
+    color 0.2s var(--ease-out);
+}
+
+.choice input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.choice::after {
+  content: "";
+  flex: none;
+  width: 18px;
+  height: 9px;
+  margin-left: auto;
+  color: var(--cream);
+  background-image: var(--hatch);
+  opacity: 0;
+}
+
+.choice:hover {
+  border-color: var(--pine);
+  background: var(--cream);
+}
+
+.choice:has(input:checked) {
+  border-color: var(--pine);
+  background: var(--pine);
+  color: var(--cream);
+}
+
+.choice:has(input:checked)::after {
+  opacity: 1;
+}
+
+.choice:has(input:focus-visible) {
+  outline: 2px solid var(--maroon);
+  outline-offset: 3px;
+}
+
+.choices[data-invalid] .choice:not(:has(input:checked)) {
+  border: 2px solid var(--pine);
+  padding: 11px 15px;
+}
+
+.reg-send {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 30px;
+  /* Room for the bar's corner brackets, which stand 8px outside it. */
+  padding: 8px 8px 8px 0;
+  margin-left: 8px;
+}
+
+.register-submit {
+  min-width: min(100%, 300px);
+  padding: 0;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.register-submit:disabled {
+  cursor: progress;
+  background-size: 100% 100%;
+}
+
+.reg-notice {
+  flex: 1 1 240px;
+  max-width: 42ch;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.form-alert {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  padding: 18px 20px;
+  border: 1.5px solid var(--pine);
+  background: var(--cream-deep);
+  font-weight: 600;
+}
+
+.form-alert h2 {
+  font-size: 1.3125rem;
+  line-height: 1.22;
+}
+
+.form-alert h2 + p {
+  font-weight: 400;
+  color: var(--ink-2);
+}
+
+.form-alert .btn {
+  margin-top: 6px;
+}
+
+.form-done {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+  padding-top: clamp(22px, 2.6vw, 32px);
+  background: linear-gradient(var(--rule), var(--rule)) 0 0 / 100% 1px no-repeat;
+}
+
+.form-done .btn {
+  margin-top: 8px;
+}
+
+:is(.form-alert, .form-done):focus-visible {
+  outline-offset: 6px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The one moment on this page: the line under "Received." is ruled in from the left. */
+  .js .form-done {
+    animation: done-rule 0.9s var(--ease-out) both;
+  }
+}
+
+@keyframes done-rule {
+  from {
+    background-size: 0 1px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .reg-form,
+  .form-done {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .reg-grid,
+  .choice-list,
+  .choice-list[data-count="3"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .reg-send {
+    margin-left: 0;
+    padding: 8px;
+  }
+
+  .register-submit {
+    width: 100%;
   }
 }
