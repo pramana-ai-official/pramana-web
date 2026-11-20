@@ -1,14 +1,14 @@
 import { footer, nav, wordmark } from "@/content";
 
 /**
- * The logo: the leaf-and-star mark beside the name. The mark is decoration here, since
- * the name next to it already says who this is. Source: brand/round-5 (option A, "Facet").
+ * The logo: the P that curls round the star, beside the name. The mark is decoration here,
+ * since the name next to it already says who this is.
  */
 function Wordmark({ href }: { href?: string }) {
   const text = (
     <>
       {/* A plain img: a small local SVG needs no image optimisation. */}
-      <img src="/brand/mark.svg" alt="" width={38} height={38} />
+      <img src="/brand/mark.svg" alt="" width={24} height={38} />
       <span>
         {wordmark.name} <b>{wordmark.suffix}</b>
       </span>
